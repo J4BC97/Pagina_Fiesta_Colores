@@ -14,9 +14,18 @@ let coloresUsados = [];
 
 const limiteBotones = coloresDisponibles.length;
 
-// 
+// Variable que define la ruta del archivo de sonido
 
 const sonidoBoton = new Audio('./sounds/effectsound.mp3')
+
+// Generar un temporizador de reinicio de botones
+
+const tiempoInactivo = 20000;
+let temporizadorInactivo = null;
+
+// Variable para definir una funcion de restablecimiento de color del titulo
+
+const tituloColorOriginal = titulo.style.color || "black";
 
 // Una funcion para generar un color unico
 
@@ -56,9 +65,11 @@ function crearBoton() {
         titulo.style.color = color;
         sonidoBoton.currentTime = 0;
         sonidoBoton.play();
+        reiniciarTemporizador(); //Para reiniciar el temporizador
     });
 
     botonContenedor.appendChild(nuevoBoton);
+    reiniciarTemporizador(); //Para reiniciar el temporizador cuando se cree el boton
 }
 
 // Funcion para borrar todos los botones generados
@@ -67,6 +78,26 @@ function borrarBotonesGenerados() {
     botonContenedor.innerHTML = ""; //Limpia el contenedor
     coloresDisponibles.push(...coloresUsados); //Devuelve los colores a la lista disponible
     coloresUsados = []; //Limpia la lista de colores usados
+    titulo.style.color = tituloColorOriginal; // Restaura el color original del titulo al presionar el boton Remover botones
+    
+    // Desactivar el temporizador hasta que se vuelvan a generar nuevos botones
+    if (temporizadorInactivo) {
+        clearTimeout(temporizadorInactivo);
+        temporizadorInactivo = null;
+    }
+}
+
+function reiniciarTemporizador() {
+    // Limpia el temporizador anterior, si existe
+    if (temporizadorInactivo) {
+        clearTimeout(temporizadorInactivo);
+    }
+
+    // Para configurar un temporizador
+    temporizadorInactivo = setTimeout(() => {
+        borrarBotonesGenerados(); // Borra los botones y restaura el color original
+        alert("Se removieron los botones y se restablecio el color del titulo")
+    }, tiempoInactivo);
 }
 
 generarBoton.addEventListener("click", crearBoton);
