@@ -1,0 +1,149 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: rgb(218, 224, 231);
+}
+body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    height: 100vh;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+main {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+header, main {
+    background: transparent;
+}
+
+.colores-titulo {
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: transparent;
+}
+
+.colores-titulo h1 {
+    font-size: 40px;
+    text-align: center;
+    font-style: normal;
+    border-radius: 10px;
+    margin: 10px;
+    width: 100%;
+    max-width: 800px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-family: 'Courier New', Courier, monospace;
+    
+}
+
+.contenedor-colores {
+    display: flex;
+    flex-flow: column wrap;
+    position: relative;
+    background: rgb(255, 255, 255, 0.3);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0px 25px 0px;
+    margin-top: 50px;
+}
+
+.colores-parrafo {
+    display: block;
+    background: transparent;
+}
+
+.colores-parrafo p {
+    background: transparent;
+    font-size: 25px;
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.colores-btn {
+    display: flex;
+    position: relative;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 25px;
+    width: 100%;
+    max-width: 600px;
+    padding: 0;
+    background: transparent;
+    
+}
+
+.boton-estilo {
+    background-color: #000000;
+    padding: 10px;
+    margin: 10px ;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.boton-estilo:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+.colores-btn-gen {
+    display: flex;
+    position: relative;
+    flex-flow: row wrap;
+    background: transparent;
+    gap: 35px;
+}
+
+.colores-btn-gen button {
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 5px 10px 5px 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    background-color: rgba(0, 0, 0);
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s ;
+}
+
+.colores-btn-gen button:hover {
+    background-color: grey;
+    transform: scale(1.1);
+}
+
+
+
