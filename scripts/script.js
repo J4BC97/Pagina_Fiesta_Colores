@@ -30,6 +30,15 @@ let intervaloContador = null;
 
 const tituloColorOriginal = titulo.style.color || "black";
 
+// Agregar un objeto para contar clics por color
+
+const clickCount = {};
+
+// Referencias al nuevo contenedor
+
+const clickList = document.getElementById("clickList");
+const mostClickedColor = document.getElementById("mostClickedColor");
+
 // Una funcion para generar un color unico
 
 function obtenerColorUnico() {
@@ -44,6 +53,25 @@ function obtenerColorUnico() {
     coloresUsados.push(color);
 
     return color
+}
+
+// Funcion para crear las estadisticas de colores
+
+function actualizarClickInfo() {
+    // Limpiar la lista actual
+    clickList.innerHTML = "";
+
+    // Generar los nuevos elementos de lista
+    Object.keys(clickCount).forEach(color => {
+        const li = document.createElement("li");
+        li.textContent = `${color}: ${clickCount[color]} clics`;
+        clickList.appendChild(li);
+    });
+
+    // Determinar el color más clickeado
+    const maxColor = Object.keys(clickCount).reduce((a, b) => 
+        clickCount[a] > clickCount[b] ? a : b, "Ninguno");
+    mostClickedColor.textContent = `Color más presionado: ${maxColor}`;
 }
 
 // Funcion para crear un nuevo boton
@@ -62,13 +90,18 @@ function crearBoton() {
     nuevoBoton.classList.add("boton-estilo");
     nuevoBoton.style.backgroundColor = color;
 
+    // Inicializar el contador de clics para el color
+    if (!clickCount[color]) clickCount[color] = 0;
+
     // Para cambiar el color del titulo al hacer clic en los botones generados
     nuevoBoton.addEventListener("click", () => {
         titulo.style.color = color;
         sonidoBoton.currentTime = 0;
         sonidoBoton.play();
 
-        nuevoBoton.textContent = `Boton ${color} (${contadorClicks} clics)`;
+        // Incrementa el contador y actualiza la informacion
+        clickCount[color]++;
+        actualizarClickInfo();
         reiniciarTemporizador(); //Para reiniciar el temporizador
     });
 
@@ -84,6 +117,11 @@ function borrarBotonesGenerados() {
     coloresUsados = []; //Limpia la lista de colores usados
     titulo.style.color = tituloColorOriginal; // Restaura el color original del titulo al presionar el boton Remover botones
     
+    //Reinicia los contadores 
+
+    Object.keys(clickCount).forEach(color => clickCount[color] = 0);
+    actualizarClickInfo();
+
     // Desactivar el temporizador hasta que se vuelvan a generar nuevos botones
     if (temporizadorInactivo) {
         clearTimeout(temporizadorInactivo);
