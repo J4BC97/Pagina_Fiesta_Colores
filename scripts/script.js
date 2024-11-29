@@ -4,6 +4,7 @@ const titulo = document.getElementById("titulo"); // Hace referencia al titulo q
 const botonContenedor = document.getElementById("btnContenedor"); //El contenedor donde se generaran los botones nuevos
 const generarBoton = document.getElementById("genBoton"); //El boton que genera los botones nuevos
 const borrarBotones =document.getElementById("ersBoton"); //El boton para borrar los nuevos generados
+const contador = document.getElementById("contador");
 
 //Array para definir una lista de colores
 
@@ -20,8 +21,10 @@ const sonidoBoton = new Audio('./sounds/effectsound.mp3')
 
 // Generar un temporizador de reinicio de botones
 
-const tiempoInactivo = 20000;
-let temporizadorInactivo = null;
+const tiempoInactivo = 10000; //10 segundos
+let tiempoRestante = tiempoInactivo / 1000;
+let temporizadorInactivo = null; 
+let intervaloContador = null;
 
 // Variable para definir una funcion de restablecimiento de color del titulo
 
@@ -56,7 +59,6 @@ function crearBoton() {
     if (!color) return; //Si no ha mas colores, no hacer nada
 
     const nuevoBoton = document.createElement("button");
-    //nuevoBoton.textContent = `Boton ${color}`;
     nuevoBoton.classList.add("boton-estilo");
     nuevoBoton.style.backgroundColor = color;
 
@@ -65,6 +67,8 @@ function crearBoton() {
         titulo.style.color = color;
         sonidoBoton.currentTime = 0;
         sonidoBoton.play();
+
+        nuevoBoton.textContent = `Boton ${color} (${contadorClicks} clics)`;
         reiniciarTemporizador(); //Para reiniciar el temporizador
     });
 
@@ -85,13 +89,37 @@ function borrarBotonesGenerados() {
         clearTimeout(temporizadorInactivo);
         temporizadorInactivo = null;
     }
+
+    if (intervaloContador) {
+        clearTimeout(temporizadorInactivo);
+        temporizadorInactivo = null;
+    }
+
+    contador.textContent = "Tiempo restante para reiniciarse: -";
+
 }
 
 function reiniciarTemporizador() {
+    if (botonContenedor.children.length === 0) return; 
     // Limpia el temporizador anterior, si existe
     if (temporizadorInactivo) {
         clearTimeout(temporizadorInactivo);
     }
+    if (intervaloContador) {
+        clearTimeout(intervaloContador);
+    }
+
+    tiempoRestante = tiempoInactivo / 1000;
+    contador.textContent = `Tiempo restante para reiniciarse: ${tiempoRestante} segundos`;
+
+    intervaloContador = setInterval (() => {
+        tiempoRestante--;
+        contador.textContent = `Tiempo restante para reiniciarse: ${tiempoRestante} segundos`;
+        if (tiempoRestante <= 0) {
+            clearInterval(intervaloContador);
+            intervaloContador = null;
+        }
+    }, 1000);
 
     // Para configurar un temporizador
     temporizadorInactivo = setTimeout(() => {
