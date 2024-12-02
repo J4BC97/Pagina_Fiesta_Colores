@@ -3,7 +3,7 @@
 const titulo = document.getElementById("titulo"); // Hace referencia al titulo que vamos a cambiar el color
 const botonContenedor = document.getElementById("btnContenedor"); //El contenedor donde se generaran los botones nuevos
 const generarBoton = document.getElementById("genBoton"); //El boton que genera los botones nuevos
-const borrarBotones =document.getElementById("ersBoton"); //El boton para borrar los nuevos generados
+const borrarBotones = document.getElementById("ersBoton"); //El boton para borrar los nuevos generados
 const contador = document.getElementById("contador");
 
 //Array para definir una lista de colores
@@ -11,7 +11,7 @@ const contador = document.getElementById("contador");
 const coloresDisponibles = [ "red", "green", "black", "white", "yellow", "blue", "pink", "purple", "orange", "grey" ];
 let coloresUsados = [];
 
-// Varias para limitar la cantidad de botones
+// Variable para limitar la cantidad de botones
 
 const limiteBotones = coloresDisponibles.length;
 
